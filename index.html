@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RxJS Demo</title>
+    <style>
+      body {
+  font-family: sans-serif;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Arial";
+  background: lightgray;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+header {
+  width: 100%;
+  height: auto;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.inner {
+  padding: 10px;
+  margin:10px;
+  cursor: pointer;
+
+}
+.body-container {
+  width: 80%;
+  height: auto;
+  border: solid 1px;
+  margin: 10px;
+  padding: 5px;
+}
+ul li {
+
+  margin: 5px;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <button class="inner" id="stop">unsubscribe</button>
+        <input class="inner"type="text"/>
+        <button class="inner">Add</button>
+
+      </header>
+      <div class="body-container">
+        <ul id="render">
+          
+          </ul>
+
+      </div>
+    </div>
+
+    <script src="./dev/main_bundle.js"></script>
+  </body>
+</html>
