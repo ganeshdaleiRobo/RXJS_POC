@@ -2486,6 +2486,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
+/***/ "./src/store.js":
+/*!**********************!*\
+  !*** ./src/store.js ***!
+  \**********************/
+/*! exports provided: addToObservable, clear */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"addToObservable\", function() { return addToObservable; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"clear\", function() { return clear; });\nvar addToObservable = function addToObservable(value) {\n  var node = document.createElement(\"LI\");\n  var textnode = document.createTextNode(value);\n  node.appendChild(textnode);\n  var ele = document.getElementById(\"render\");\n  ele.appendChild(node);\n};\nvar clear = function clear(element) {\n  element.value = \"\";\n};\n\n//# sourceURL=webpack:///./src/store.js?");
+
+/***/ }),
+
 /***/ "./src/testrx.js":
 /*!***********************!*\
   !*** ./src/testrx.js ***!
@@ -2494,7 +2506,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ \"./node_modules/rxjs/_esm5/index.js\");\n/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ \"./node_modules/rxjs/_esm5/operators/index.js\");\n\n\nvar stop = document.getElementById(\"stop\");\nvar add = document.getElementById(\"add\");\nvar Input = document.getElementById(\"text-input\");\nvar obser = rxjs__WEBPACK_IMPORTED_MODULE_0__[\"Observable\"].create(function (observer) {\n  observer.next(\"Hello\");\n});\nvar observable = obser.subscribe(addList);\nstop.addEventListener(\"click\", function () {\n  observable.unsubscribe();\n});\n\nfunction addList(value) {\n  var node = document.createElement(\"LI\");\n  var textnode = document.createTextNode(value);\n  node.appendChild(textnode);\n  var ele = document.getElementById(\"render\");\n  ele.appendChild(node);\n}\n\nadd.addEventListener(\"click\", function () {\n  obser.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__[\"map\"])(function (data) {\n    return data + Input.value;\n  })).subscribe(addList);\n});\n\n//# sourceURL=webpack:///./src/testrx.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ \"./node_modules/rxjs/_esm5/index.js\");\n/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ \"./node_modules/rxjs/_esm5/operators/index.js\");\n/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ \"./src/store.js\");\n\n\n\nvar Input = document.getElementById(\"text-input\");\nvar obser = rxjs__WEBPACK_IMPORTED_MODULE_0__[\"Observable\"].create(function (observer) {\n  observer.next();\n});\nInput.addEventListener(\"keydown\", function (event) {\n  if (event.key === \"Enter\") {\n    event.preventDefault();\n    obser.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__[\"map\"])(function (data) {\n      return Input.value;\n    })).subscribe(_store__WEBPACK_IMPORTED_MODULE_2__[\"addToObservable\"]);\n    Object(_store__WEBPACK_IMPORTED_MODULE_2__[\"clear\"])(Input);\n  }\n\n  console.log(obser);\n});\n\n//# sourceURL=webpack:///./src/testrx.js?");
 
 /***/ })
 

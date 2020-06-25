@@ -40,25 +40,35 @@ header {
   margin: 10px;
   padding: 5px;
 }
+ul{
+  margin: 0px;
+  padding: 0px;
+}
 ul li {
-
   margin: 5px;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+#text-input{
+  border: none;
+    background: transparent;
+    height: 20px;
+    width: 300px;
 }
     </style>
   </head>
   <body>
     <div class="container">
       <header>
-        <button class="inner" id="stop">unsubscribe</button>
-        <input class="inner"type="text" id="text-input"/>
-        <button class="inner" id="add">Add</button>
+        <div>Console</div>
 
       </header>
       <div class="body-container">
         <ul id="render">
           
           </ul>
-
+          <input type="text" id="text-input"/>
       </div>
     </div>
 
