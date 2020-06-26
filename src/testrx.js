@@ -10,15 +10,18 @@ var obser = Observable.create((observer) => {
 fromEvent(Input, "keydown").subscribe((event) => {
   if (event.key === "Enter") {
     let inputData = event.target.value;
-    Module.setData(inputData)
+    Module.setData(inputData);
     obser
       .pipe(
         map((data) => {
-       console.log(Module.getDataFromObject(data,Module.convertStringToObjectKey(inputData)));
-          return inputData
+          return ( 
+            inputData +":"+
+            Module.getDataFromObject(data,Module.convertStringToObjectKey(inputData)
+            )
+          )
         })
       )
       .subscribe(Module.addToObservable);
-      Module.clear(Input);
+    Module.clear(Input);
   }
 });
