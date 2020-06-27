@@ -1,6 +1,7 @@
 import { Observable, fromEvent } from "rxjs";
 import { map, reduce, filter } from "rxjs/operators";
 import { Module } from "./module";
+import './consoleObject.js';
 
 let Input = document.getElementById("text-input");
 var obser = Observable.create((observer) => {
@@ -14,6 +15,7 @@ fromEvent(Input, "keydown").subscribe((event) => {
     obser
       .pipe(
         map((data) => {
+          console.log("data>>>", data)
           return ( 
             inputData +":"+
             Module.getDataFromObject(data,Module.convertStringToObjectKey(inputData)

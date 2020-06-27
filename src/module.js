@@ -1,15 +1,17 @@
+import { checkDataType } from "./typeCheck";
 export const Module = (function () {
   "use strict";
-  var _storeData = [{ data: "sdsds" }];
-  function _refactorObject(left, right) {
-    if (right == undefined || right == "") {
-      _storeData.push({ [left]: undefined });
+  var _storeData = [{type: "var", data: "sdsds" }];
+  function _refactorObject(Obj) {
+    console.log("?>>>>>",Obj)
+    if (Obj.value == undefined || Obj.value == "") {
+      _storeData.push({[Obj.key]: undefined});
     } else {
-      _storeData.push({ [left]: right });
+      _storeData.push({type:Obj.type,[Obj.key]: Obj.value });
     }
   }
   function removeWhiteSpace(str) {
-    return String(str).replace(/^\s+|\s+$/gm, "");
+    return String(str).replace(/\s+/g, "");
   }
 
   function _getKeyFromObject(inputData) {
@@ -23,15 +25,29 @@ export const Module = (function () {
     };
   }
   function createObject(inputData) {
-    switch (inputData) {
-      case "clear":
-        clearConsoleText("render");
+    _typeCheck(removeWhiteSpace(inputData));
+    var getData = _getKeyFromObject(inputData);
+   // _refactorObject(getData.key, getData.value);
+  }
+
+  function _typeCheck(str) {
+    switch (checkDataType(str)) {
+      case "var":
+        var obj = _getKeyFromObject(String(str).splitByIndex(3)[1]);
+        obj.type = String(str).splitByIndex(3)[0];
+        _refactorObject(obj)
+        break;
+      case "let":
+        console.log("let>>");
+        break;
+      case "const":
+        console.log("const>>>");
         break;
       default:
-        var getData = _getKeyFromObject(inputData);
-        _refactorObject(getData.key, getData.value);
+        console.log("default");
     }
   }
+
   function renderData(value) {
     var temp = String(value).split(":");
     for (var i = 0; i < temp.length; i++) {
@@ -45,11 +61,11 @@ export const Module = (function () {
   function clearInputText(element) {
     element.value = "";
   }
-  function clearConsoleText(ele){
-  var ele = document.getElementById(ele);
+  function clearConsoleText(ele) {
+    var ele = document.getElementById(ele);
     while (ele.childElementCount > 0) {
-      ele.removeChild("li");
-  }
+      ele.removeChild(ele.lastElementChild);
+    }
   }
   function _getDataFromObject(object, key) {
     var value = "";
