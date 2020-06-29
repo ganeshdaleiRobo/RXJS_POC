@@ -24,7 +24,7 @@ export const isCompareKeyAndType = function (_store, inputObject) {
   return iskeyInObject;
 };
 
-export const checkFunctionType = (str)=>{
+export const checkFunctionType = function (str) {
   var result = "";
   for (var i = 0; i < FUNCTIONS_TYPE.length; i++) {
     if (
@@ -34,4 +34,4 @@ export const checkFunctionType = (str)=>{
     }
   }
   return result;
-}
+};

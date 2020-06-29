@@ -1,6 +1,18 @@
-import { checkVariavleType, isCompareKeyAndType } from "./typeCheck";
-import { INITIAL_DATA, UpdateInitalData } from "./consoleObject";
-import { ErrorRender, renderDataToUI } from "./render";
+import {
+  checkVariavleType,
+  isCompareKeyAndType,
+  checkFunctionType,
+} from "./typeCheck";
+import { ErrorRender, renderDataToUI, clearConsoleText } from "./render";
+import {
+  INITIAL_DATA,
+  UpdateInitalData,
+  retrieveDataFromInitalData,
+  _getDataFromObject,
+} from "./consoleObject";
+
+
+
 export const Module = (function () {
   "use strict";
   var isError = false;
@@ -60,19 +72,6 @@ export const Module = (function () {
   function clearInputText(element) {
     element.value = "";
   }
-  function clearConsoleText(ele) {
-    var ele = document.getElementById(ele);
-    while (ele.childElementCount > 0) {
-      ele.removeChild(ele.lastElementChild);
-    }
-  }
-  function _getDataFromObject(object, key) {
-    var value = "";
-    for (var i = 0; i < object.length; i++) {
-      value = object[i][new String(key.key)];
-    }
-    return value;
-  }
   const receiveObserData = (receiveData) => {
     var removeSpace = String(removeWhiteSpace(receiveData));
     var temp = String(removeSpace).splitByIndex(
@@ -81,7 +80,13 @@ export const Module = (function () {
     var obj = _getKeyFromObject(temp);
     var str = receiveData + ":" + obj.value;
     !isError ? renderDataToUI(str) : "";
-    console.log(obj);
+    switch (checkFunctionType(removeSpace)) {
+      case "clear":
+        clearConsoleText("render");
+        INITIAL_DATA.length = 0;
+        break;
+      default:
+    }
   };
   return {
     setData: createObject,

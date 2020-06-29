@@ -16,3 +16,11 @@ export const renderDataToUI = (value) => {
     ele.appendChild(node);
   }
 };
+
+export const clearConsoleText = (ele) => {
+  var ele = document.getElementById(ele);
+  while (ele.childElementCount > 0) {
+    ele.removeChild(ele.lastElementChild);
+  }
+  
+};
