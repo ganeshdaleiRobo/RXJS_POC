@@ -1,23 +1,29 @@
-import { checkDataType } from "./typeCheck";
+import { checkVariavleType, isCompareKeyAndType } from "./typeCheck";
+import { INITIAL_DATA, UpdateInitalData } from "./consoleObject";
+import { ErrorRender, renderDataToUI } from "./render";
 export const Module = (function () {
   "use strict";
-  var _storeData = [{type: "var", data: "sdsds" }];
+  var isError = false;
   function _refactorObject(Obj) {
-    console.log("?>>>>>",Obj)
-    if (Obj.value == undefined || Obj.value == "") {
-      _storeData.push({[Obj.key]: undefined});
-    } else {
-      _storeData.push({type:Obj.type,[Obj.key]: Obj.value });
+    switch (isCompareKeyAndType(INITIAL_DATA, Obj)) {
+      case true:
+        ErrorRender(
+          "SyntaxEUncaught SyntaxError: Please Check variable declared"
+        );
+        isError = true;
+        break;
+      case false:
+        UpdateInitalData(Obj);
+        isError = false;
+        break;
+      default:
     }
   }
   function removeWhiteSpace(str) {
     return String(str).replace(/\s+/g, "");
   }
-
   function _getKeyFromObject(inputData) {
-    var leftHandSide = String(inputData)
-      .split("=")[0]
-      .replace(/^\s+|\s+$/gm, "");
+    var leftHandSide = String(inputData).split("=")[0].replace(/\s+/g, "");
     var rightHandSide = String(inputData).split("=")[1];
     return {
       key: leftHandSide,
@@ -26,38 +32,31 @@ export const Module = (function () {
   }
   function createObject(inputData) {
     _typeCheck(removeWhiteSpace(inputData));
-    var getData = _getKeyFromObject(inputData);
-   // _refactorObject(getData.key, getData.value);
   }
 
   function _typeCheck(str) {
-    switch (checkDataType(str)) {
+    switch (checkVariavleType(str)) {
       case "var":
         var obj = _getKeyFromObject(String(str).splitByIndex(3)[1]);
         obj.type = String(str).splitByIndex(3)[0];
-        _refactorObject(obj)
+        _refactorObject(obj);
         break;
       case "let":
-        console.log("let>>");
+        var obj = _getKeyFromObject(String(str).splitByIndex(3)[1]);
+        obj.type = String(str).splitByIndex(3)[0];
+        _refactorObject(obj);
         break;
       case "const":
-        console.log("const>>>");
+        var obj = _getKeyFromObject(String(str).splitByIndex(5)[1]);
+        obj.type = String(str).splitByIndex(5)[0];
+        _refactorObject(obj);
         break;
       default:
-        console.log("default");
+        var obj = _getKeyFromObject(str);
+        _refactorObject(obj);
     }
   }
 
-  function renderData(value) {
-    var temp = String(value).split(":");
-    for (var i = 0; i < temp.length; i++) {
-      var node = document.createElement("LI");
-      var textnode = document.createTextNode(temp[i]);
-      node.appendChild(textnode);
-      var ele = document.getElementById("render");
-      ele.appendChild(node);
-    }
-  }
   function clearInputText(element) {
     element.value = "";
   }
@@ -74,10 +73,20 @@ export const Module = (function () {
     }
     return value;
   }
+  const receiveObserData = (receiveData) => {
+    var removeSpace = String(removeWhiteSpace(receiveData));
+    var temp = String(removeSpace).splitByIndex(
+      checkVariavleType(removeSpace).length
+    )[1];
+    var obj = _getKeyFromObject(temp);
+    var str = receiveData + ":" + obj.value;
+    !isError ? renderDataToUI(str) : "";
+    console.log(obj);
+  };
   return {
     setData: createObject,
-    initialData: _storeData,
-    addToObservable: renderData,
+    initialData: INITIAL_DATA,
+    addToObservable: receiveObserData,
     clear: clearInputText,
     getDataFromObject: _getDataFromObject,
     convertStringToObjectKey: _getKeyFromObject,

@@ -1,11 +1,11 @@
-String.prototype.splitByIndex = function (index) {
-  var str = "";
-  var substr = "";
-  var temp = [];
-  for (var i = 0; i < index; i++) {
-    str += this[i];
+export const INITIAL_DATA = [{ type: "var", data: "sdsds" }];
+
+export const UpdateInitalData = (input) => {
+  if (input.value == undefined || input.value == "") {
+    INITIAL_DATA.push({ [input.key]: undefined });
+  } else {
+    INITIAL_DATA.push({ type: input.type, [input.key]: input.value });
   }
-  substr = this.substring(index, this.length);
-  temp.push(str, substr);
-  return temp;
+
+  console.log("INITIAL_DATA>>", INITIAL_DATA)
 };
